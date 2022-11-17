@@ -1,0 +1,42 @@
+<% layout('layouts/boilerplate') %> 
+   
+    <h1 class="text-center">Team List</h1>
+    <div>
+        <a href="/teamlist/new">Add Teams</a>
+    </div>
+
+    <ul>
+        <div class="col-6 offset-3">
+        <% for(let t of findTeam ){ %> 
+            <div class="card" mb-3>
+                <div class="row">
+                  <div class="col-md-4">
+                        <img class="img-fluid" src="<%= t.image %> " alt="">
+                    </div>  
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <li><a href="/teamlist/<%= t._id %>"><%= t.name %></a></li> 
+                    </div>
+                </div>
+            </div>
+            </div>
+            <% } %> 
+        </div>
+    </ul>
+    <br>
+    <a href="/member">Back To All Players Name</a>
+
+
+
+<!-- 
+    <h1>Team List</h1>
+    <ul>
+        <% for(let t of findTeam ){ %> 
+          <li><a href="/teamlist/<%= t._id %>"><%= t.name %></a></li>  
+            <% } %> 
+    </ul>
+    <br>
+    <a href="/teamlist/new">Add Teams</a>
+    <br>
+    <a href="/member">Back To All Players Name</a> -->
+

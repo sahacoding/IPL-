@@ -1,0 +1,52 @@
+<% layout('layouts/boilerplate') %> 
+   
+
+    <div class="row">
+        <h1 class="text-center">Creating New Players</h1>
+           <div class="col-6 offset-3">
+              <form action="/teamlist/<%= findIdteamp._id%>/member" method="POST">
+                   <div class = 'mb-3'>
+                     <label class="form-label" for="name">Player Name:</label>
+                     <input class="form-control" type="text" id="name" name="name">
+                   </div>
+
+                   <div class = 'mb-3'>
+                    <label class="form-label" for="img">Image Url:</label>
+                    <input class="form-control" type="text" id="img" name="img">
+                  </div>
+
+                     <div class = 'mb-3'>
+                      <label class="form-label" for="age">Age:</label>
+                      <input class="form-control" type="number" id="age" name="age">
+                    </div>
+
+                 
+
+                   <div class = 'mb-3'>
+                    <label class="form-label" for="country">Player's Country:</label>
+                    <input class="form-control" type="text" id="country" name="country"></input>
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="form-label" for="category">Select category</label>
+                    <select name="category" id="category">
+                        <option value="batsman">Batsman</option>
+                        <option value="bowler">Bowler</option>
+                        <option value="wk">WK</option>
+                        <option value="allrounder">Allrounder</option>
+                    </select>
+                  </div>
+
+                  <div class="mb-3">
+                    <button class="btn btn-success">Submit</button>
+                  </div>
+
+                  <section>
+                    <a href="/member">Cancel</a>
+                </section>
+                </form>
+          </div>
+    </div>   
+ 
+    
+  

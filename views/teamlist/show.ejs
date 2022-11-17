@@ -1,0 +1,51 @@
+<% layout('layouts/boilerplate') %> 
+
+<div class="row">
+    <div class="col-6 offset-3">
+
+        <div class="card mb-3" >
+            <img  src="<%= idTeam.image %> " class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title"><%= idTeam.name %></h5>
+              
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item ">State:<%= idTeam.name %></li>
+              <li class="list-group-item">Rating: <%= idTeam.rating %></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<a href="/teamlist/<%= idTeam._id %>/edit">Edit Team</a>
+
+        
+           
+     <div class="row">
+      <div class="col-6 offset-3">
+        <div class="card mb-3" >
+         
+          <div class="card-body">
+            <h3 class="card-title">Players Name</h3>
+          </div>
+          <ul class="list-group list-group-flush">
+            <% for(teamPlayer of idTeam.player ){ %> 
+            <li class="list-group-item"><a href="/member/<%= teamPlayer._id %>"><%= teamPlayer.name %></a>(<%= teamPlayer.country %>)</li>
+            <% } %> 
+          </ul>
+        </div>
+      </div>
+
+     </div>
+     <br>
+     <a href="/teamlist/<%= idTeam._id %>/member/new">Add Players Name</a>
+    <br>
+    <a href="/teamlist">Back to All Team</a>
+
+    <form action="/teamlist/<%= idTeam._id %>?_method=DELETE" method="POST">
+        <button>DELETE</button>
+        </form>
+ 
+        
+ 
+

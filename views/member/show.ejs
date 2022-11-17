@@ -1,0 +1,46 @@
+
+
+    <% layout('layouts/boilerplate') %> 
+
+ <div class="row">
+        <div class="col-6 offset-3">
+    <div class="card mb-3" >
+        <img  src="<%= idPlayer.img %> " class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h1 class="card-title"><%= idPlayer.name %></h1>
+                  </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item ">Age: <%= idPlayer.age %></li>
+                  <li class="list-group-item">Country: <%= idPlayer.country %></li>
+                  <li class="list-group-item">Category: <%= idPlayer.category %></li>
+                  <li>Team: <a href="/teamlist/<%= idPlayer.team._id%>"><%= idPlayer.team.name %></a> </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <a href="/member/<%= idPlayer._id%>/edit ">Edit Player</a>
+    <br>
+    <a href="/member">Back to All Players</a>
+    <br>
+    <a href="/teamlist">Back to Team List</a>
+   
+
+ 
+
+   
+    <!-- <h1><%= idPlayer.name %> </h1>
+    <ul>
+        <li>Age: <%= idPlayer.age %> </li>
+        <li>Country: <%= idPlayer.country %> </li>
+        <li>Category: <%= idPlayer.category %> </li>
+    </ul>
+    <br>
+    <a href="/member/<%= idPlayer._id%>/edit ">Edit Player</a>
+    <br>
+    <li>Team: <a href="/teamlist/<%= idPlayer.team._id%>"><%= idPlayer.team.name %></a> </li>
+   <br>
+    <a href="/member">Back to All Players</a>
+    <br>
+    <a href="/teamlist">Back to Team List</a>   -->
+
+
