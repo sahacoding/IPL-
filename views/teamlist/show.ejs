@@ -10,14 +10,14 @@
               
             </div>
             <ul class="list-group list-group-flush">
-              <li class="list-group-item ">State:<%= idTeam.name %></li>
+              <li class="list-group-item ">State:<%= idTeam.state %></li>
               <li class="list-group-item">Rating: <%= idTeam.rating %></li>
             </ul>
         </div>
     </div>
 </div>
 
-<a href="/teamlist/<%= idTeam._id %>/edit">Edit Team</a>
+<a class="btn btn-primary" href="/teamlist/<%= idTeam._id %>/edit">Edit Team</a>
 
         
            
@@ -38,7 +38,7 @@
 
      </div>
      <br>
-     <a href="/teamlist/<%= idTeam._id %>/member/new">Add Players Name</a>
+     <a class="btn btn-primary" href="/teamlist/<%= idTeam._id %>/member/new">Add Players Name</a>
     <br>
     <a href="/teamlist">Back to All Team</a>
 

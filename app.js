@@ -6,8 +6,23 @@ const Team = require ('./models/team')
 const mongoose = require('mongoose');
 const methodOver = require('method-override');
 const ejsMate = require ('ejs-mate')
+const Joi = require ('joi');
+const catchAsync = require ('./utils/catchAsync');
+const ExpressError = require ('./utils/ExpressError');
+const {isLoggedIn} = require('./middleware');
 
-mongoose.connect('mongodb://localhost:27017/imageIPL')
+const CampsTeam = require ('./routes/camteam');
+const CampsPlayer = require ('./routes/camplayer');
+
+const session = require ('express-session');
+const flash = require ('connect-flash');
+const passport = require ('passport');
+const LocalStrategy = require ('passport-local');
+const User = require ('./models/user')
+
+const userRoutes = require ('./routes/users')
+
+mongoose.connect('mongodb://localhost:27017/eimageIPLS')
 .then(()=>{
     console.log('Mongo Connection Open!!')
 }).catch(err =>{
@@ -21,126 +36,49 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({extended: true}));
 app.use(methodOver('_method'))
 
-//team Route
+const SessionConfig = {
+    secret: 'thisshouldbeabettersecret',
+    resave : false,
+    saveUninitialized : true,
+    cookie : {
+        httpOnly: true,
+        expires : Date.now() + 100 * 60 * 60 * 24 * 7,
+        maxAge : 1000 * 60 * 60 * 24 * 7
+    }
+}
+app.use(session(SessionConfig))
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
 
-app.get('/teamlist', async (req, res)=> {
-    const findTeam = await Team.find({})
-    res.render('teamlist/index', {findTeam})
-    //res.render('teamlist/index')
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+app.use((req, res, next) =>{
+    res.locals.currentUser = req.user;
+    res.locals.success = req.flash('success');
+     res.locals.error = req.flash('error');
+    next();
 })
 
-app.get('/teamlist/new', async (req, res)=> {
-    res.render('teamlist/new')
+app.use('/', userRoutes );
+app.use('/teamlist', CampsTeam)
+app.use('/member', CampsPlayer)
+
+
+app.all('*', (req, res, next) => {
+    next(new ExpressError('Page not Found', 404))
 })
 
-app.post('/teamlist', async (req,res)=>{
-    //console.log(req.body)
-    const newTeam = await new Team(req.body);
-   console.log(newTeam);
-//    res.send(newTeam);
-   await newTeam.save();
-   res.redirect('/teamlist')
-})
-
-app.get('/teamlist/:id', async (req,res)=>{
-    const {id} = req.params;
-    const idTeam = await Team.findById(id).populate('player');
-    res.render('teamlist/show', {idTeam})
-})
-
-app.get('/teamlist/:id/member/new', async (req,res)=>{
-    const {id} = req.params;
-    const findIdteamp = await Team.findById(id);
-    res.render('member/new', {findIdteamp})
-})
-
-app.post('/teamlist/:id/member', async (req, res)=>{
-    const {id} = req.params;
-    //console.log(id);
-     const findIdteamp = await Team.findById(id);
-    // console.log(findIdteamp)
-   const {name, img, age, country, category } = req.body;
-    const teamPlayer = new Player({name, img,  age, country, category } );
-    findIdteamp.player.push(teamPlayer);
-    teamPlayer.team = findIdteamp;
-    //  console.log(teamPlayer.team)
-    //  res.send(findIdteamp);
-    await  findIdteamp.save();
-    await  teamPlayer.save();
-     res.redirect(`/teamlist/${id}`);
-})
-
-app.get('/teamlist/:id/edit', async(req, res) =>{
-    const {id} = req.params;
-    const editTeamlist = await Team.findById(id);
-    // console.log(i);
-    // res.send(i)
-     res.render('teamlist/edit', {editTeamlist})
-})
-
-app.put('/teamlist/:id', async(req, res) =>{
-    const {id} = req.params;
-    const updateTeam = await Team.findByIdAndUpdate(id, req.body, {runValidators: true, new: true})
-    //console.log(j)
-    res.redirect(`/teamlist/${updateTeam._id}`)
-    // console.log(req.body)
-    // res.send ('Put..')
-})
-
-app.delete('/teamlist/:id', async(req, res) =>{
-    // res.send('DELETED')
-     // const {id} = req.params;
-      const deleteteamlist = await Team.findByIdAndDelete(req.params.id);
-      res.redirect('/teamlist');
- })
+app.use((err, req, res, next) =>{
+    const {statusCode = 500} = err;
+    if(!err.message) err.message = 'Oh no Something Went Wrong'
+    res.status(statusCode).render('error', {err})
+   })
 
 
 
-//Players Route
-
-app.get('/member', async (req, res)=> {
-    const findPlayer = await Player.find({})
-    res.render('member/index', {findPlayer})
-})
-
-app.get('/member/new', async (req, res)=> {
-    res.render('member/new')
-})
-
-app.post('/member', async (req,res)=>{
-    console.log(req.body)
-     const newPlayer = await new Player(req.body);
-    console.log(newPlayer);
-   // res.send(newPlayer);
-     await newPlayer.save();
-     res.redirect('/member')
-})
-
-app.get('/member/:id', async (req,res)=>{
-    const {id} = req.params;
-    const idPlayer = await Player.findById(id).populate('team', 'name');
-    res.render('member/show', {idPlayer})
-})
-
-app.get('/member/:id/edit', async(req, res) =>{
-    const {id} = req.params;
-    const editPlayerlist = await Player.findById(id);
-    // console.log(i);
-    // res.send(i)
-     res.render('member/edit', {editPlayerlist})
-})
-
-app.put('/member/:id', async(req, res) =>{
-    const {id} = req.params;
-    const updatePlayer = await Player.findByIdAndUpdate(id, req.body, {runValidators: true, new: true})
-    //console.log(j)
-    res.redirect(`/member/${updatePlayer._id}`)
-    // console.log(req.body)
-    // res.send ('Put..')
-})
-
-
-
-app.listen(3055, ()=>{
-    console.log('App is listening on port 3055')
+app.listen(3071, ()=>{
+    console.log('App is listening on port 3071')
 })

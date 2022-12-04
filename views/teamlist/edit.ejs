@@ -5,25 +5,25 @@
  <div class="row">
     <h1 class="text-center">Edit Team</h1>
        <div class="col-6 offset-3">
-          <form action="/teamlist/<%= editTeamlist._id %>?_method=PUT" method="POST">
+          <form action="/teamlist/<%= editTeamlist._id %>?_method=PUT" method="POST" novalidate class="validated-form">
                <div class = 'mb-3'>
                  <label class="form-label" for="name">Team Name:</label>
-                 <input class="form-control" type="text" id="name" name="name" value="<%=  editTeamlist.name %> ">
+                 <input class="form-control" type="text" id="name" name="name" value="<%= editTeamlist.name%>" required>
                </div>
 
                  <div class = 'mb-3'>
                   <label class="form-label" for="image">Image Url:</label>
-                  <input class="form-control" type="text" id="image" name="image" value="<%=  editTeamlist.image %> ">
+                  <input class="form-control" type="text" id="image" name="image" value="<%= editTeamlist.image %>" required>
                 </div>
 
                <div class = 'mb-3'>
                 <label class="form-label" for="state">Team State:</label>
-                <input class="form-control" type="text" id="state" name="state" value="<%=  editTeamlist.state %> ">
+                <input class="form-control" type="text" id="state" name="state" value="<%= editTeamlist.state %>" required>
                </div>
 
                <div class = 'mb-3'>
                 <label class="form-label" for="rating">rating:</label>
-                <input class="form-control" type="number" id="rating" name="rating" value="<%=  editTeamlist.rating %>">
+                <input class="form-control" type="number" id="rating" name="rating" value="<%= editTeamlist.rating%>" required>
               </div>
 
               <div class="mb-3">

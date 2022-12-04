@@ -3,25 +3,25 @@
  <div class="row">
         <h1 class="text-center">Creating New Teams</h1>
            <div class="col-6 offset-3">
-              <form action="/teamlist" method="post">
+              <form action="/teamlist" method="post" novalidate class="validated-form">
                    <div class = 'mb-3'>
                      <label class="form-label" for="name">Team Name:</label>
-                     <input class="form-control" type="text" id="name" name="name">
+                     <input class="form-control" type="text" id="name" name=  "name" required>
                    </div>
 
                      <div class = 'mb-3'>
                       <label class="form-label" for="image">Image Url:</label>
-                      <input class="form-control" type="text" id="image" name="image">
+                      <input class="form-control" type="text" id="image" name="image" required>
                     </div>
 
                    <div class = 'mb-3'>
                     <label class="form-label" for="state">Team State:</label>
-                    <input class="form-control" type="text" id="state" name="state">
+                    <input class="form-control" type="text" id="state" name="state" required>
                    </div>
 
                    <div class = 'mb-3'>
                     <label class="form-label" for="rating">rating:</label>
-                    <input class="form-control" type="number" id="rating" name="rating"></input>
+                    <input class="form-control" type="number" id="rating" name="rating" required></input>
                   </div>
 
                   <div class="mb-3">
@@ -31,4 +31,6 @@
           </div>
     </div>     
 
+
+  
 

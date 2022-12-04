@@ -4,27 +4,27 @@
     <div class="row">
         <h1 class="text-center">Creating New Players</h1>
            <div class="col-6 offset-3">
-              <form action="/teamlist/<%= findIdteamp._id%>/member" method="POST">
+              <form action="/teamlist/<%= findIdteamp._id%>/member" method="POST" novalidate>
                    <div class = 'mb-3'>
                      <label class="form-label" for="name">Player Name:</label>
-                     <input class="form-control" type="text" id="name" name="name">
+                     <input class="form-control" type="text" id="name" name="name" required>
                    </div>
 
                    <div class = 'mb-3'>
                     <label class="form-label" for="img">Image Url:</label>
-                    <input class="form-control" type="text" id="img" name="img">
+                    <input class="form-control" type="text" id="img" name="img" required>
                   </div>
 
                      <div class = 'mb-3'>
                       <label class="form-label" for="age">Age:</label>
-                      <input class="form-control" type="number" id="age" name="age">
+                      <input class="form-control" type="number" id="age" name="age" required>
                     </div>
 
                  
 
                    <div class = 'mb-3'>
                     <label class="form-label" for="country">Player's Country:</label>
-                    <input class="form-control" type="text" id="country" name="country"></input>
+                    <input class="form-control" type="text" id="country" name="country" required></input>
                   </div>
 
                   <div class="mb-3">
